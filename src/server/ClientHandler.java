@@ -12,15 +12,18 @@ public class ClientHandler {
     
     public ClientHandler(Socket socket) throws IOException
     {
+        System.out.println("HELLO?CLIENT HANDLER");
         this.socket = socket;
         PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
         
         Scanner input = new Scanner(socket.getInputStream());
-        String msg = input.nextLine();
         
         String inputLine, outputLine;
         ChatProtocol cp = new ChatProtocol();
-        cp.processInput(inputLine)
+        System.out.println("I CAN GET HERE");
+        inputLine = input.nextLine();
+        System.out.println("I WANT TO BE HERE");
+        cp.processInput(inputLine);
             
         socket.close();
     }

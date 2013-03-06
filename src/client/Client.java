@@ -11,48 +11,45 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Client implements ChatClient{
+public class Client extends Thread implements ChatClient {
 
     Socket socket;
     PrintWriter output;
     Scanner input;
     String username;
-    
+
     @Override
     public void connect(String serverAddress, int port, String userName) throws UnknownHostException, IOException {
         socket = new Socket(serverAddress, port);
         output = new PrintWriter(socket.getOutputStream(), true);
         input = new Scanner(socket.getInputStream());
         username = userName;
-        output.print("CONNECT #"+username);
+        start();
+        output.println("CONNECT #" + username);
+        System.out.println("When do i get here?");
     }
 
     @Override
     public void sendMessage(String receiver, String msg) {
-        
     }
 
     @Override
     public void disconnect() {
-        
     }
 
     @Override
     public void addMessageArivedEventListener(MessageArrivedListener listener) {
-        
     }
 
     @Override
     public void removeMessageArivedEventListener(MessageArrivedListener listener) {
-        
     }
-    
+
     //DUMMY MAIN METHOD
     public static void main(String[] args) {
-        try {        
+        try {
             Client client = new Client();
             client.addMessageArivedEventListener(new MessageArrivedListener() {
-
                 @Override
                 public void MessageArrived(MessageArrivedEvent event) {
                     System.out.println(event.getMessage());
@@ -64,7 +61,13 @@ public class Client implements ChatClient{
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
+    @Override
+    public void run() {
+        boolean keepRunning = true;
+        while (keepRunning) {
+        }
+    }
 }
