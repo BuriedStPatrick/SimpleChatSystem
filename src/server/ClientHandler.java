@@ -13,7 +13,7 @@ public class ClientHandler extends Thread {
     Scanner input;
 
     public ClientHandler(Server s, Socket socket) throws IOException {
-        System.out.println("HELLO?CLIENT HANDLER");
+        
         server = s;
         this.socket = socket;
         PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
@@ -21,9 +21,9 @@ public class ClientHandler extends Thread {
 
         String inputLine, outputLine;
         ChatProtocol cp = new ChatProtocol();
-        System.out.println("I CAN GET HERE");
+        
         inputLine = input.nextLine();
-        System.out.println("I WANT TO BE HERE");
+        
         cp.processInput(inputLine);
 
         socket.close();
