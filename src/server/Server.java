@@ -20,8 +20,9 @@ public class Server {
             Map<String, ClientHandler> clients = new HashMap<>();
             while (true) {
                 Socket cs = ss.accept();
+                
                 ClientHandler ch = new ClientHandler(this, cs);
-                users.put(ch.getUserID(), ch);
+                clients.put(ch.getUserID(), ch);
                 ch.start();
             }
         } catch (IOException ex) {
@@ -37,5 +38,28 @@ public class Server {
     
     public HashMap<String, ClientHandler> getClientHandlers(){
         return clients;
+    }
+    
+    public void online(String input){
+        String out = null;
+        
+        if(input.equals("ONLINE#")){
+            out = input;
+            for(String user : clients.keySet())
+            {
+                out += user;
+            }
+        }
+        for(ClientHandler handler : clients.values()){
+            handler.sendMessage(out);
+        }
+    }
+    
+    public void message(){
+        
+    }
+    
+    public void close(){
+        
     }
 }

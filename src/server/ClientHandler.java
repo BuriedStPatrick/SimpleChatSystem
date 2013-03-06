@@ -38,6 +38,9 @@ public class ClientHandler extends Thread {
         }
     }
     
+    public void sendMessage(String out){
+        output.println(out);
+    }
     public String getUserID()
     {
         return userID;
