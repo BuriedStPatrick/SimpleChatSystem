@@ -12,6 +12,7 @@ public class ClientHandler extends Thread {
     PrintWriter output;
     Scanner input;
     ChatProtocol cp;
+    String userID;
 
     public ClientHandler(Server s, Socket socket) throws IOException {
         server = s;
@@ -23,6 +24,7 @@ public class ClientHandler extends Thread {
         cp = new ChatProtocol();
         inputLine = input.nextLine();
         outputLine = cp.processInput(inputLine);
+        userID = outputLine.substring(outputLine.lastIndexOf('#'));
         output.println(outputLine);
     }
     boolean keepRunning = true;
@@ -34,5 +36,10 @@ public class ClientHandler extends Thread {
             String out = cp.processInput(msg);
             output.println(out);
         }
+    }
+    
+    public String getUserID()
+    {
+        return userID;
     }
 }
