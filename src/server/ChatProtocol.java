@@ -8,7 +8,6 @@ public class ChatProtocol {
     private int state = NOTCONNECTED;
 
     public String processInput(String input) {
-        System.out.println("Hello from protocol");
         String output = null;
         if (state == NOTCONNECTED) {
             if (input.startsWith("CONNECT#")) {

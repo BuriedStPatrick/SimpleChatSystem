@@ -21,7 +21,7 @@ public class Server {
             while (true) {
                 Socket cs = ss.accept();
                 ClientHandler ch = new ClientHandler(this, cs);
-                clients.put(null, ch);
+                users.put(ch.getUserID(), ch);
                 ch.start();
             }
         } catch (IOException ex) {
