@@ -16,8 +16,8 @@ public class ServerProtocol {
             output = input;
             
         }
-        else if(input.equals(this))
-        
         return output;
+        
+        
     }
 }
