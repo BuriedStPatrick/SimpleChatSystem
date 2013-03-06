@@ -10,17 +10,18 @@ import java.util.logging.Level;
 public class Server {
 
     public static final int PORT = 4242;
+    HashMap<String, ClientHandler> clients;
 
     private void listen() {
         //Connect to server and accept connection
         ServerSocket ss = null;
         try {
             ss = new ServerSocket(PORT);
-            Map<String, ClientHandler> users = new HashMap<>();
+            Map<String, ClientHandler> clients = new HashMap<>();
             while (true) {
                 Socket cs = ss.accept();
                 ClientHandler ch = new ClientHandler(this, cs);
-                users.put(null, ch);
+                clients.put(null, ch);
                 ch.start();
             }
         } catch (IOException ex) {
@@ -32,5 +33,9 @@ public class Server {
     public static void main(String[] args) {
         Server server = new Server();
         server.listen();
+    }
+    
+    public HashMap<String, ClientHandler> getClientHandlers(){
+        return clients;
     }
 }
