@@ -17,24 +17,28 @@ public class Client extends Thread implements ChatClient {
     PrintWriter output;
     Scanner input;
     String username;
+    Scanner DUMMYINPUT;
 
     @Override
     public void connect(String serverAddress, int port, String userName) throws UnknownHostException, IOException {
         socket = new Socket(serverAddress, port);
         output = new PrintWriter(socket.getOutputStream(), true);
         input = new Scanner(socket.getInputStream());
+        DUMMYINPUT = new Scanner(System.in);
         username = userName;
+        output.println("CONNECT#" + username);
+        System.out.println(input.nextLine());
         start();
-        output.println("CONNECT #" + username);
-        System.out.println("When do i get here?");
     }
 
     @Override
     public void sendMessage(String receiver, String msg) {
+        output.println("SEND#" + receiver + "#" + msg);
     }
 
     @Override
     public void disconnect() {
+        output.println("CLOSE#");
     }
 
     @Override
@@ -68,6 +72,9 @@ public class Client extends Thread implements ChatClient {
     public void run() {
         boolean keepRunning = true;
         while (keepRunning) {
+            String msg = DUMMYINPUT.next();
+            sendMessage("*", msg);
+            System.out.println(input.nextLine());
         }
     }
 }

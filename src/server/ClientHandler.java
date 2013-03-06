@@ -11,31 +11,28 @@ public class ClientHandler extends Thread {
     Server server;
     PrintWriter output;
     Scanner input;
+    ChatProtocol cp;
 
     public ClientHandler(Server s, Socket socket) throws IOException {
-        System.out.println("HELLO?CLIENT HANDLER");
         server = s;
         this.socket = socket;
-        PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
-        Scanner input = new Scanner(socket.getInputStream());
+        output = new PrintWriter(socket.getOutputStream(), true);
+        input = new Scanner(socket.getInputStream());
 
         String inputLine, outputLine;
-        ChatProtocol cp = new ChatProtocol();
-        System.out.println("I CAN GET HERE");
+        cp = new ChatProtocol();
         inputLine = input.nextLine();
-        System.out.println("I WANT TO BE HERE");
-        cp.processInput(inputLine);
-
-        socket.close();
+        outputLine = cp.processInput(inputLine);
+        output.println(outputLine);
     }
     boolean keepRunning = true;
 
     @Override
     public void run() {
-        String msg = input.nextLine();
-        System.out.println(msg);
         while (keepRunning) {
-            msg = input.nextLine();
+            String msg = input.nextLine();
+            String out = cp.processInput(msg);
+            output.println(out);
         }
     }
 }
