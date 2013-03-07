@@ -49,7 +49,7 @@ public class Server {
         String out = input.substring(0, input.indexOf('#')+1);
             for(String user : clients.keySet())
             {
-                out += user+", ";
+                out += user+",";
             }
 
         for(ClientHandler handler : clients.values()){
@@ -94,6 +94,7 @@ public class Server {
         clients.remove(userID);
         for(ClientHandler handler : clients.values()){
             handler.sendMessage("EXITS#"+userID);
+            online("ONLINE#");
         }
     }
 }

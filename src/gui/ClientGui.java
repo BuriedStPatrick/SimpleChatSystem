@@ -60,7 +60,7 @@ public class ClientGui extends javax.swing.JFrame {
             }
         });
         try {
-            client1.connect("192.168.0.2", 4242, username);
+            client1.connect("localhost", 4242, username);
             jTextField1.requestFocusInWindow();
         } catch (UnknownHostException ex) {
             Logger.getLogger(ClientGui.class.getName()).log(Level.SEVERE, null, ex);
