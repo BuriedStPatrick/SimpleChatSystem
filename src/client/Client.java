@@ -13,14 +13,14 @@ import java.util.logging.Logger;
 import javax.swing.event.EventListenerList;
 
 public class Client extends Thread implements ChatClient {
-
+    
     Socket socket;
     PrintWriter output;
     Scanner input;
     String username;
     protected EventListenerList listenerList = new EventListenerList();
     static Scanner DUMMYINPUT;
-
+    
     @Override
     public void connect(String serverAddress, int port, String userName) throws UnknownHostException, IOException {
         socket = new Socket(serverAddress, port);
@@ -31,27 +31,27 @@ public class Client extends Thread implements ChatClient {
         System.out.println(input.nextLine());
         start();
     }
-
+    
     @Override
     public void sendMessage(String receiver, String msg) {
         output.println("SEND#" + receiver + "#" + msg);
     }
-
+    
     @Override
     public void disconnect() {
         output.println("CLOSE#");
     }
-
+    
     @Override
     public void addMessageArivedEventListener(MessageArrivedListener listener) {
         listenerList.add(MessageArrivedListener.class, listener);
     }
-
+    
     @Override
     public void removeMessageArivedEventListener(MessageArrivedListener listener) {
         listenerList.remove(MessageArrivedListener.class, listener);
     }
-
+    
     void fireMessageArrivedEventEvent(MessageArrivedEvent evt) {
         Object[] listeners = listenerList.getListenerList();
         for (int i = 0; i < listeners.length; i = i + 2) {
@@ -78,9 +78,9 @@ public class Client extends Thread implements ChatClient {
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
-
+    
     @Override
     public void run() {
         boolean keepRunning = true;
@@ -91,16 +91,18 @@ public class Client extends Thread implements ChatClient {
         }
     }
     
-    private class DummyScanner extends Thread{
-        public DummyScanner()
-        {
+    private class DummyScanner extends Thread {
+
+        public DummyScanner() {
             
         }
+
         @Override
-        public void run()
-        {
-            String msg = DUMMYINPUT.next();
-            sendMessage("*", msg);            
+        public void run() {
+            while (true) {                
+                String msg = DUMMYINPUT.nextLine();
+                sendMessage("*", msg);                
+            }            
         }
     }
 }
