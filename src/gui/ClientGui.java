@@ -101,7 +101,7 @@ public class ClientGui extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String out = jTextField1.getText();
         if (out.startsWith("@")) {
-            client1.sendMessage(out.substring(1, out.indexOf(" ")), out.substring(out.indexOf(" "))+1);
+            client1.sendMessage(out.substring(1, out.indexOf(" ")), out.substring(out.indexOf(" ")+1));
         } else {
             client1.sendMessage("*", out);
         }
@@ -111,7 +111,7 @@ public class ClientGui extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         String out = jTextField1.getText();
         if (out.startsWith("@")) {
-            client1.sendMessage(out.substring(1, out.indexOf(" ")), out.substring(out.indexOf(" "))+1);
+            client1.sendMessage(out.substring(1, out.indexOf(" ")), out.substring(out.indexOf(" ")+1));
         } else {
             client1.sendMessage("*", out);
         }

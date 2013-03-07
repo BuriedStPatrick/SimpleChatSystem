@@ -63,6 +63,7 @@ public class Server {
         reciever = reciever.substring(0, reciever.indexOf("#"));
         System.out.println(reciever);
         ArrayList<String> recievers = new ArrayList();
+        recievers.add(sender);
         boolean more = true;
         while(more)
         {
