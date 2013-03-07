@@ -28,7 +28,6 @@ public class Client extends Thread implements ChatClient {
         input = new Scanner(socket.getInputStream());
         username = userName;
         output.println("CONNECT#" + username);
-        System.out.println(input.nextLine());
         start();
     }
 

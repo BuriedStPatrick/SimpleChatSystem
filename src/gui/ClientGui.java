@@ -6,6 +6,9 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,7 +26,7 @@ public class ClientGui extends javax.swing.JFrame {
             }
         });
         username = JOptionPane.showInputDialog("Please enter a username.");
-        username.replace(" ", "_");
+        username = username.replace(" ", "_");
         jLabel1.setText(username);
         this.addWindowListener(new WindowListener() {
 
@@ -57,7 +60,7 @@ public class ClientGui extends javax.swing.JFrame {
             }
         });
         try {
-            client1.connect("localhost", 4242, username);
+            client1.connect("192.168.0.2", 4242, username);
             jTextField1.requestFocusInWindow();
         } catch (UnknownHostException ex) {
             Logger.getLogger(ClientGui.class.getName()).log(Level.SEVERE, null, ex);
@@ -154,7 +157,15 @@ public class ClientGui extends javax.swing.JFrame {
 
     private void client1MessageArrived(interfaces.MessageArrivedEvent evt) {
         String newline = System.getProperty("line.separator");
-        jTextArea1.append(newline + evt.getMessage());
+        String time = DateFormat.getTimeInstance().format(Calendar.getInstance(TimeZone.getDefault()).getTime());
+        String msg = evt.getMessage();
+        if(msg.startsWith("MESSAGE"))
+        {
+        msg = msg.substring(msg.indexOf("#")+1);
+        jTextArea1.append(newline+ time + " "  + msg);
+        }else{
+        jTextArea1.append(newline+ msg);            
+        }
     }
 
     public static void main(String args[]) {
