@@ -3,6 +3,7 @@ package server;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ClientHandler extends Thread {
@@ -24,7 +25,7 @@ public class ClientHandler extends Thread {
         cp = new ChatProtocol();
         inputLine = input.nextLine();
         outputLine = cp.processInput(inputLine);
-        userID = outputLine.substring(outputLine.lastIndexOf('#')+1);
+        userID = outputLine.substring(outputLine.lastIndexOf('#') + 1);
         server.addClient(this);
         server.online(outputLine);
     }
@@ -33,20 +34,26 @@ public class ClientHandler extends Thread {
     @Override
     public void run() {
         while (keepRunning) {
-            String msg = input.nextLine();
-            String out = cp.processInput(msg);
-            if(out.startsWith("MESSAGE"))
-                server.message(userID, out);
-            else if(out.startsWith("CLOSE"))
-                server.close();
+            try {
+                String msg = input.nextLine();
+                String out = cp.processInput(msg);
+                if (out.startsWith("MESSAGE")) {
+                    server.message(userID, out);
+                } else if (out.startsWith("CLOSE")) {
+                    server.close(userID);
+                }
+            } catch (NoSuchElementException ex) {
+                server.close(userID);
+            }
         }
+
     }
-    
-    public void sendMessage(String out){
+
+    public void sendMessage(String out) {
         output.println(out);
     }
-    public String getUserID()
-    {
+
+    public String getUserID() {
         return userID;
     }
 }

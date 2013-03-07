@@ -57,7 +57,6 @@ public class Server {
     }
     
     public void message(String sender, String msg){
-        System.out.println(msg);
         for(ClientHandler handler : clients.values())
         {
             if(msg.charAt(8)=='*'||msg.contains(','+handler.getUserID()+','))
@@ -67,7 +66,11 @@ public class Server {
         }
     }
     
-    public void close(){
-        
+    public void close(String userID){
+        clients.get(userID).sendMessage("CLOSE#");
+        clients.remove(userID);
+        for(ClientHandler handler : clients.values()){
+            handler.sendMessage("EXITS#"+userID);
+        }
     }
 }

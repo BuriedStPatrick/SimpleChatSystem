@@ -19,9 +19,11 @@ public class ChatProtocol {
                 output = "MESSAGE" + input.substring(4);
             } else if (input.startsWith("CLOSE#")) {
                 output = input;
+                state = CLOSING;
             }
-
-
+        } else if (state == CLOSING)
+        {
+            output = "";
         }
 
         return output;
