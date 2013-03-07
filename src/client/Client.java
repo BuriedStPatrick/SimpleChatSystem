@@ -10,6 +10,7 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.EventListenerList;
 
 public class Client extends Thread implements ChatClient {
 
@@ -17,14 +18,14 @@ public class Client extends Thread implements ChatClient {
     PrintWriter output;
     Scanner input;
     String username;
-    Scanner DUMMYINPUT;
+    protected EventListenerList listenerList = new EventListenerList();
+    static Scanner DUMMYINPUT;
 
     @Override
     public void connect(String serverAddress, int port, String userName) throws UnknownHostException, IOException {
         socket = new Socket(serverAddress, port);
         output = new PrintWriter(socket.getOutputStream(), true);
         input = new Scanner(socket.getInputStream());
-        DUMMYINPUT = new Scanner(System.in);
         username = userName;
         output.println("CONNECT#" + username);
         System.out.println(input.nextLine());
@@ -43,14 +44,26 @@ public class Client extends Thread implements ChatClient {
 
     @Override
     public void addMessageArivedEventListener(MessageArrivedListener listener) {
+        listenerList.add(MessageArrivedListener.class, listener);
     }
 
     @Override
     public void removeMessageArivedEventListener(MessageArrivedListener listener) {
+        listenerList.remove(MessageArrivedListener.class, listener);
+    }
+
+    void fireMessageArrivedEventEvent(MessageArrivedEvent evt) {
+        Object[] listeners = listenerList.getListenerList();
+        for (int i = 0; i < listeners.length; i = i + 2) {
+            if (listeners[i] == MessageArrivedListener.class) {
+                ((MessageArrivedListener) listeners[i + 1]).MessageArrived(evt);
+            }
+        }
     }
 
     //DUMMY MAIN METHOD
     public static void main(String[] args) {
+        DUMMYINPUT = new Scanner(System.in);
         try {
             Client client = new Client();
             client.addMessageArivedEventListener(new MessageArrivedListener() {
@@ -59,7 +72,7 @@ public class Client extends Thread implements ChatClient {
                     System.out.println(event.getMessage());
                 }
             });
-            client.connect("localhost", 4242, "Username");
+            client.connect("localhost", 4242, DUMMYINPUT.nextLine());
         } catch (UnknownHostException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -71,10 +84,23 @@ public class Client extends Thread implements ChatClient {
     @Override
     public void run() {
         boolean keepRunning = true;
+        DummyScanner ds = new DummyScanner();
+        ds.run();
         while (keepRunning) {
-            String msg = DUMMYINPUT.next();
-            sendMessage("*", msg);
             System.out.println(input.nextLine());
+        }
+    }
+    
+    private class DummyScanner extends Thread{
+        public DummyScanner()
+        {
+            
+        }
+        @Override
+        public void run()
+        {
+            String msg = DUMMYINPUT.next();
+            sendMessage("*", msg);            
         }
     }
 }

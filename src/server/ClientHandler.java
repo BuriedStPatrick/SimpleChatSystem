@@ -24,8 +24,9 @@ public class ClientHandler extends Thread {
         cp = new ChatProtocol();
         inputLine = input.nextLine();
         outputLine = cp.processInput(inputLine);
-        userID = outputLine.substring(outputLine.lastIndexOf('#'));
-        output.println(outputLine);
+        userID = outputLine.substring(outputLine.lastIndexOf('#')+1);
+        server.addClient(this);
+        server.online(outputLine);
     }
     boolean keepRunning = true;
 
