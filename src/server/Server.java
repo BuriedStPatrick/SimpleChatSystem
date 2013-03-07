@@ -56,8 +56,15 @@ public class Server {
         }
     }
     
-    public void message(){
-        
+    public void message(String sender, String msg){
+        System.out.println(msg);
+        for(ClientHandler handler : clients.values())
+        {
+            if(msg.charAt(8)=='*'||msg.contains(','+handler.getUserID()+','))
+            {
+                handler.sendMessage("MESSAGE#"+sender+msg.substring(msg.lastIndexOf("#")));
+            }
+        }
     }
     
     public void close(){

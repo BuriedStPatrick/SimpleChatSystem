@@ -85,7 +85,7 @@ public class Client extends Thread implements ChatClient {
     public void run() {
         boolean keepRunning = true;
         DummyScanner ds = new DummyScanner();
-        ds.run();
+        ds.start();
         while (keepRunning) {
             System.out.println(input.nextLine());
         }
