@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,8 +84,8 @@ public class Client extends Thread implements ChatClient {
     @Override
     public void run() {
         boolean keepRunning = true;
-        DummyScanner ds = new DummyScanner();
-        ds.start();
+//        DummyScanner ds = new DummyScanner();
+//        ds.start();
         while (keepRunning) {
             String msg = input.nextLine();
             if (msg.startsWith("CLOSE#")) {
@@ -97,23 +96,24 @@ public class Client extends Thread implements ChatClient {
                     Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
+                fireMessageArrivedEventEvent(new MessageArrivedEvent(this, msg));
                 System.out.println(msg);
             }
         }
 
     }
 
-    private class DummyScanner extends Thread {
-
-        public DummyScanner() {
-        }
-
-        @Override
-        public void run() {
-            while (true) {
-                String msg = DUMMYINPUT.nextLine();
-                sendMessage("*", msg);
-            }
-        }
-    }
+//    private class DummyScanner extends Thread {
+//
+//        public DummyScanner() {
+//        }
+//
+//        @Override
+//        public void run() {
+//            while (true) {
+//                String msg = DUMMYINPUT.nextLine();
+//                sendMessage("*", msg);
+//            }
+//        }
+//    }
 }

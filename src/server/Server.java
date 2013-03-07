@@ -57,6 +57,7 @@ public class Server {
     }
     
     public void message(String sender, String msg){
+        System.out.println(msg);
         for(ClientHandler handler : clients.values())
         {
             if(msg.charAt(8)=='*'||msg.contains(','+handler.getUserID()+','))

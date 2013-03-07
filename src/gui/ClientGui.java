@@ -1,6 +1,7 @@
 package gui;
 
 import interfaces.MessageArrivedEvent;
+import interfaces.MessageArrivedListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
@@ -12,6 +13,13 @@ public class ClientGui extends javax.swing.JFrame {
 
     public ClientGui() {
         initComponents();
+        client1.addMessageArivedEventListener(new MessageArrivedListener() {
+
+            @Override
+            public void MessageArrived(MessageArrivedEvent event) {
+                client1MessageArrived(event);
+            }
+        });
         username = JOptionPane.showInputDialog("Please enter a username.");
         jLabel1.setText(username);
         try {
@@ -91,16 +99,16 @@ public class ClientGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        client1.sendMessage(null, jTextField1.getText());
+        client1.sendMessage("*", jTextField1.getText());
         jTextField1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        client1.sendMessage(null, jTextField1.getText());
+        client1.sendMessage("*", jTextField1.getText());
         jTextField1.setText("");
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-     private void echoClient1MessageArrived(MessageArrivedEvent evt)                                           
+     private void client1MessageArrived(interfaces.MessageArrivedEvent evt)                                           
     {                                               
         String newline = System.getProperty("line.separator");
         jTextArea1.append(newline+evt.getMessage());
@@ -131,6 +139,7 @@ public class ClientGui extends javax.swing.JFrame {
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new ClientGui().setVisible(true);
             }
