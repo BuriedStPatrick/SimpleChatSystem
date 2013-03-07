@@ -1,5 +1,10 @@
 package gui;
 
+import interfaces.MessageArrivedEvent;
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class ClientGui extends javax.swing.JFrame {
@@ -8,6 +13,17 @@ public class ClientGui extends javax.swing.JFrame {
     public ClientGui() {
         initComponents();
         username = JOptionPane.showInputDialog("Please enter a username.");
+        jLabel1.setText(username);
+        try {
+            client1.connect("localhost", 4242, username);
+            jTextField1.requestFocusInWindow();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ClientGui.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Error connecting to host.");
+        } catch (IOException ex) {
+            Logger.getLogger(ClientGui.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Problem with your own connection.");
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -54,9 +70,7 @@ public class ClientGui extends javax.swing.JFrame {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -86,6 +100,11 @@ public class ClientGui extends javax.swing.JFrame {
         jTextField1.setText("");
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+     private void echoClient1MessageArrived(MessageArrivedEvent evt)                                           
+    {                                               
+        String newline = System.getProperty("line.separator");
+        jTextArea1.append(newline+evt.getMessage());
+    }   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
