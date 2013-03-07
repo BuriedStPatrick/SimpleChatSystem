@@ -2,6 +2,8 @@ package gui;
 
 import interfaces.MessageArrivedEvent;
 import interfaces.MessageArrivedListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
@@ -21,7 +23,39 @@ public class ClientGui extends javax.swing.JFrame {
             }
         });
         username = JOptionPane.showInputDialog("Please enter a username.");
+        username.replace(" ", "_");
         jLabel1.setText(username);
+        this.addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                client1.disconnect();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
         try {
             client1.connect("localhost", 4242, username);
             jTextField1.requestFocusInWindow();
