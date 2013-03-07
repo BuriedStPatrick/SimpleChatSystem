@@ -3,6 +3,7 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 
@@ -58,9 +59,29 @@ public class Server {
     
     public void message(String sender, String msg){
         System.out.println(msg);
+        String reciever = msg.substring(msg.indexOf("#")+1);
+        reciever = reciever.substring(0, reciever.indexOf("#"));
+        System.out.println(reciever);
+        ArrayList<String> recievers = new ArrayList();
+        boolean more = true;
+        while(more)
+        {
+            if (reciever.indexOf(",")<0)
+            {
+                recievers.add(reciever);
+                more = false;
+            }
+            else{
+                recievers.add(reciever.substring(0, reciever.indexOf(",")));
+                reciever = reciever.substring(reciever.indexOf(",")+1);
+            }
+        }
+        for (int i = 0; i < recievers.size(); i++) {
+            System.out.println(i+": "+recievers.get(i));
+        }
         for(ClientHandler handler : clients.values())
         {
-            if(msg.charAt(8)=='*'||msg.contains(','+handler.getUserID()+','))
+            if(recievers.contains("*")||recievers.contains(handler.getUserID()))
             {
                 handler.sendMessage("MESSAGE#"+sender+msg.substring(msg.lastIndexOf("#")));
             }

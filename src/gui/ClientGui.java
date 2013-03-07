@@ -9,12 +9,12 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class ClientGui extends javax.swing.JFrame {
+
     private String username = "";
 
     public ClientGui() {
         initComponents();
         client1.addMessageArivedEventListener(new MessageArrivedListener() {
-
             @Override
             public void MessageArrived(MessageArrivedEvent event) {
                 client1MessageArrived(event);
@@ -99,20 +99,30 @@ public class ClientGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        client1.sendMessage("*", jTextField1.getText());
+        String out = jTextField1.getText();
+        if (out.startsWith("@")) {
+            client1.sendMessage(out.substring(1, out.indexOf(" ")), out.substring(out.indexOf(" "))+1);
+        } else {
+            client1.sendMessage("*", out);
+        }
         jTextField1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        client1.sendMessage("*", jTextField1.getText());
+        String out = jTextField1.getText();
+        if (out.startsWith("@")) {
+            client1.sendMessage(out.substring(1, out.indexOf(" ")), out.substring(out.indexOf(" "))+1);
+        } else {
+            client1.sendMessage("*", out);
+        }
         jTextField1.setText("");
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-     private void client1MessageArrived(interfaces.MessageArrivedEvent evt)                                           
-    {                                               
+    private void client1MessageArrived(interfaces.MessageArrivedEvent evt) {
         String newline = System.getProperty("line.separator");
-        jTextArea1.append(newline+evt.getMessage());
-    }   
+        jTextArea1.append(newline + evt.getMessage());
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -136,7 +146,7 @@ public class ClientGui extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ClientGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
