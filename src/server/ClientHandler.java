@@ -35,7 +35,10 @@ public class ClientHandler extends Thread {
         while (keepRunning) {
             String msg = input.nextLine();
             String out = cp.processInput(msg);
-            output.println(out);
+            if(out.startsWith("MESSAGE"))
+                server.message(userID, out);
+            else if(out.startsWith("CLOSE"))
+                server.close();
         }
     }
     
