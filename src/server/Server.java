@@ -4,8 +4,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class Server {
 
@@ -14,10 +18,13 @@ public class Server {
 
     private void listen() {
         //Connect to server and accept connection
+        Logger.getLogger(Server.class.getName()).log(Level.INFO, "Started the server: "+new Date().toString());
         clients = new HashMap<>();
         ServerSocket ss;
         try {
             ss = new ServerSocket(PORT);
+            
+            
             clients = new HashMap<>();
             while (true) {
                 Socket cs = ss.accept();
@@ -37,8 +44,19 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        Server server = new Server();
-        server.listen();
+        try {
+            Logger logger = Logger.getLogger(Server.class.getName());
+            FileHandler fileTxt = new FileHandler("Logging.txt");
+            java.util.logging.Formatter formatterTxt = new SimpleFormatter();
+            fileTxt.setFormatter(formatterTxt);
+            logger.addHandler(fileTxt);
+            Server server = new Server();
+            server.listen();
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public HashMap<String, ClientHandler> getClientHandlers(){
@@ -58,10 +76,9 @@ public class Server {
     }
     
     public void message(String sender, String msg){
-        System.out.println(msg);
         String reciever = msg.substring(msg.indexOf("#")+1);
         reciever = reciever.substring(0, reciever.indexOf("#"));
-        System.out.println(reciever);
+        
         ArrayList<String> recievers = new ArrayList();
         recievers.add(sender);
         boolean more = true;
@@ -87,6 +104,12 @@ public class Server {
                 handler.sendMessage("MESSAGE#"+sender+msg.substring(msg.lastIndexOf("#")));
             }
         }
+        Logger.getLogger(Server.class.getName()).log(Level.INFO, sender
+                +" sent to "
+                +recievers.toString()
+                +": "+msg+
+                " - "
+                +new Date().toString());
     }
     
     public void close(String userID){
@@ -96,5 +119,6 @@ public class Server {
             handler.sendMessage("EXITS#"+userID);
             online("ONLINE#");
         }
+        Logger.getLogger(Server.class.getName()).log(Level.INFO, userID+" exits - "+new Date().toString());
     }
 }

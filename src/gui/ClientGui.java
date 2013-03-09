@@ -28,6 +28,7 @@ public class ClientGui extends javax.swing.JFrame {
         username = JOptionPane.showInputDialog("Please enter a username.");
         username = username.replace(" ", "_");
         jLabel1.setText(username);
+        jTextArea1.setEditable(false);
         this.addWindowListener(new WindowListener() {
 
             @Override
@@ -161,10 +162,10 @@ public class ClientGui extends javax.swing.JFrame {
         String msg = evt.getMessage();
         if(msg.startsWith("MESSAGE"))
         {
-        msg = msg.substring(msg.indexOf("#")+1);
-        jTextArea1.append(newline+ time + " "  + msg);
+            msg = msg.substring(msg.indexOf("#")+1);
+            jTextArea1.append(time + ": "  + msg+newline);
         }else{
-        jTextArea1.append(newline+ msg);            
+            jTextArea1.append(msg+newline);            
         }
     }
 
