@@ -19,16 +19,16 @@ public class ServerMonitorUDP {
     
     public static void main(String[] args){
         try {
+        DatagramSocket datagramSocket = new DatagramSocket(4242);
             while (true) {
         
-        DatagramSocket datagramSocket = new DatagramSocket(4242);
         
         byte[] buffer = new byte[255];
         
         DatagramPacket inPacket = new DatagramPacket(buffer, buffer.length);
-        
+                System.out.println("Recieving...");
         datagramSocket.receive(inPacket);
-        
+                System.out.println("Recieved!");
         InetAddress address = inPacket.getAddress();
         int port = inPacket.getPort();
         byte[] message = ("Server Time: "+new Date().toString()+"\n"

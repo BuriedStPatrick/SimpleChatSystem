@@ -37,6 +37,7 @@ public class Client extends Thread implements ChatClient {
     }
     
     public void serverMonitor(){
+        System.out.println("serverMonitor()");
         ClientMonitorUDP cmudp = new ClientMonitorUDP();
         String out = new String(cmudp.getServerStatus().getData());
         System.out.println(out);

@@ -1,4 +1,12 @@
-Mar 10, 2013 10:51:55 PM server.Server listen
-INFO: Started the server: Sun Mar 10 22:51:55 CET 2013
-Mar 10, 2013 10:57:54 PM server.Server close
-INFO: Pipper exits - Sun Mar 10 22:57:54 CET 2013
+Mar 10, 2013 11:02:43 PM server.Server listen
+INFO: Started the server: Sun Mar 10 23:02:43 CET 2013
+Mar 10, 2013 11:03:08 PM server.Server close
+INFO: asd exits - Sun Mar 10 23:03:08 CET 2013
+Mar 10, 2013 11:04:31 PM server.Server close
+INFO: asd exits - Sun Mar 10 23:04:31 CET 2013
+Mar 10, 2013 11:09:24 PM server.Server close
+INFO: asd exits - Sun Mar 10 23:09:24 CET 2013
+Mar 10, 2013 11:10:35 PM server.Server close
+INFO: asd exits - Sun Mar 10 23:10:35 CET 2013
+Mar 10, 2013 11:14:13 PM server.Server close
+INFO: asdasd exits - Sun Mar 10 23:14:13 CET 2013

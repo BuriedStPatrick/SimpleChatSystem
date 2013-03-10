@@ -17,6 +17,7 @@ public class ClientMonitorUDP {
 
   public DatagramPacket getServerStatus()
   {
+      System.out.println("CMUDP started");
       DatagramPacket inPacket = null;
       String msg = "hello";
       
