@@ -1,0 +1,10 @@
+Mar 09, 2013 7:12:42 PM server.Server listen
+INFO: Started the server: Sat Mar 09 19:12:42 CET 2013
+Mar 09, 2013 7:13:02 PM server.Server message
+INFO: Pipper sent to [Pipper, *]: MESSAGE#*#Oh hi! - Sat Mar 09 19:13:02 CET 2013
+Mar 09, 2013 7:13:14 PM server.Server message
+INFO: Pipper sent to [Pipper, Pipper]: MESSAGE#Pipper#lol talking to meself - Sat Mar 09 19:13:14 CET 2013
+Mar 09, 2013 7:13:16 PM server.Server message
+INFO: Pipper sent to [Pipper, *]: MESSAGE#*#... - Sat Mar 09 19:13:16 CET 2013
+Mar 09, 2013 7:13:17 PM server.Server close
+INFO: Pipper exits - Sat Mar 09 19:13:17 CET 2013
