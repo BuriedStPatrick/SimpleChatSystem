@@ -76,17 +76,6 @@ public class Server {
         }
     }
     
-    public void serverMonitor(){
-        String out = "Server Time: "+new Date().toString()+"\n"
-                +    "Memory consumption: "+(Runtime.getRuntime().maxMemory()-Runtime.getRuntime().freeMemory()/1024/1024)+"\n"
-                +    "CPU-load: 10%\n"
-                +    "Processes Running: "+(clients.size())+"\n"
-                +    "Available Memory: "+Runtime.getRuntime().freeMemory();
-        for(ClientHandler handler : clients.values()){
-            handler.sendMessage(out);
-        }
-    }
-    
     public void message(String sender, String msg){
         String reciever = msg.substring(msg.indexOf("#")+1);
         reciever = reciever.substring(0, reciever.indexOf("#"));
