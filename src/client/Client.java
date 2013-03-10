@@ -35,6 +35,10 @@ public class Client extends Thread implements ChatClient {
     public void sendMessage(String receiver, String msg) {
         output.println("SEND#" + receiver + "#" + msg);
     }
+    
+    public void serverMonitor(){
+        output.println("SERVERSTATUS#");
+    }
 
     @Override
     public void disconnect() {
@@ -71,7 +75,7 @@ public class Client extends Thread implements ChatClient {
                     System.out.println(event.getMessage());
                 }
             });
-            client.connect("localhost", 4242, DUMMYINPUT.nextLine());
+            client.connect("192.168.1.11", 4242, DUMMYINPUT.nextLine());
         } catch (UnknownHostException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
