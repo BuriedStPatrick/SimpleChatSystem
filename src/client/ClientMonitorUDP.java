@@ -18,17 +18,19 @@ public class ClientMonitorUDP {
   public DatagramPacket getServerStatus()
   {
       DatagramPacket inPacket = null;
+      String msg = "hello";
+      
     try {
       
       try (DatagramSocket dataGramSocket = new DatagramSocket()) {
         InetAddress address = InetAddress.getByName(addr);
+        DatagramPacket outPacket = new DatagramPacket(msg.getBytes(), msg.getBytes().length, address, PORT);
         
+        dataGramSocket.send(outPacket);
         byte[] buffer = new byte[255];
         inPacket = new DatagramPacket(buffer, buffer.length);
         
         dataGramSocket.receive(inPacket);
-        
-        
         
       }
     } catch (UnknownHostException ex) {

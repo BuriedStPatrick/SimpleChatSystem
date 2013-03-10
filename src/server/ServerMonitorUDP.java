@@ -21,7 +21,7 @@ public class ServerMonitorUDP {
         try {
             while (true) {
         
-        DatagramSocket datagramSocket = new DatagramSocket(1234);
+        DatagramSocket datagramSocket = new DatagramSocket(4242);
         
         byte[] buffer = new byte[255];
         
