@@ -37,7 +37,9 @@ public class Client extends Thread implements ChatClient {
     }
     
     public void serverMonitor(){
-        output.println("SERVERSTATUS#");
+        ClientMonitorUDP cmudp = new ClientMonitorUDP();
+        String out = new String(cmudp.getServerStatus().getData());
+        System.out.println(out);
     }
 
     @Override
@@ -64,7 +66,7 @@ public class Client extends Thread implements ChatClient {
         }
     }
 
-    //DUMMY MAIN METHOD
+    //DUMMY MAIN METHOD FOR TESTING STATES
     public static void main(String[] args) {
         try {
             Client client = new Client();
