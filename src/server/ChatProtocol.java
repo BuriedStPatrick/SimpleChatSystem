@@ -21,6 +21,9 @@ public class ChatProtocol {
                 output = input;
                 state = CLOSING;
             }
+            else if(input.startsWith("SERVERSTATUS#")){
+                output = "SERVERSTATUS";
+            }
         } else if (state == CLOSING)
         {
             output = "";

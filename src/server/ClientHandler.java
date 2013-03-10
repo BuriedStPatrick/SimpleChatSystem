@@ -42,6 +42,9 @@ public class ClientHandler extends Thread {
                 } else if (out.startsWith("CLOSE")) {
                     server.close(userID);
                 }
+                else if(out.startsWith("SERVERSTATUS")){
+                    server.serverMonitor();
+                }
             } catch (NoSuchElementException ex) {
                 server.close(userID);
             }

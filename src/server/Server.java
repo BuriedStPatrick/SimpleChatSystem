@@ -14,16 +14,17 @@ import java.util.logging.SimpleFormatter;
 public class Server {
 
     public static final int PORT = 4242;
+    ServerSocket ss;
     HashMap<String, ClientHandler> clients;
+    private static int processes = 0;
 
     private void listen() {
         //Connect to server and accept connection
         Logger.getLogger(Server.class.getName()).log(Level.INFO, "Started the server: "+new Date().toString());
         clients = new HashMap<>();
-        ServerSocket ss;
+        
         try {
             ss = new ServerSocket(PORT);
-            
             
             clients = new HashMap<>();
             while (true) {
@@ -70,6 +71,17 @@ public class Server {
                 out += user+",";
             }
 
+        for(ClientHandler handler : clients.values()){
+            handler.sendMessage(out);
+        }
+    }
+    
+    public void serverMonitor(){
+        String out = "Server Time: "+new Date().toString()+"\n"
+                +    "Memory consumption: "+(Runtime.getRuntime().maxMemory()-Runtime.getRuntime().freeMemory()/1024/1024)+"\n"
+                +    "CPU-load: 10%\n"
+                +    "Processes Running: "+(clients.size())+"\n"
+                +    "Available Memory: "+Runtime.getRuntime().freeMemory();
         for(ClientHandler handler : clients.values()){
             handler.sendMessage(out);
         }
